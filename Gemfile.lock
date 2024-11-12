@@ -32,6 +32,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  base64 (~> 0.2.0)
   bigdecimal (~> 3.1)
   byebug (~> 11.1)
   puma (~> 6.4)

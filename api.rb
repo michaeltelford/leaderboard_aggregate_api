@@ -1,21 +1,23 @@
-require 'sinatra'
-require 'byebug'
-require_relative 'aggregate'
+require "sinatra"
+require "byebug"
+require "base64"
+require_relative "aggregate"
 
 CONTENT_TYPE_JSON = { "Content-Type" => "application/json" }.freeze
 CONTENT_TYPE_HTML = { "Content-Type" => "text/html; charset=utf-8" }.freeze
 
-get '/health' do
+get "/health" do
   200
 end
 
-post '/aggregate' do
-  aggregate_results
+post "/aggregate" do
+  halt 401 unless authorized?(request.env)
 
+  aggregate_results
   201
 end
 
-get '/' do
+get "/" do
   html = request.accept?("text/html")
   jumps = build_jumps_response(html:)
 
@@ -23,6 +25,20 @@ get '/' do
 end
 
 ### Private helper methods ###
+
+# Performs HTTP basic authentication, returning true if authorized.
+def authorized?(headers)
+  auth_header = headers["HTTP_AUTHORIZATION"]
+  return false unless auth_header
+  return false unless auth_header.include?("Basic ")
+
+  auth_header = auth_header.gsub("Basic ", "")
+  secret = Base64.decode64(auth_header)
+  return false unless secret.include?(":")
+
+  username, password = secret.split(":")
+  username == ENV["BASIC_AUTH_USERNAME"] && password == ENV["BASIC_AUTH_PASSWORD"]
+end
 
 # Returns an object that responds to #each and yields only strings to the given block
 def build_jumps_response(html: true)

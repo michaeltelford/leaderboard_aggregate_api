@@ -109,3 +109,19 @@ end
 - `GET /aggregated.json`
 - `POST /aggregate` (requiring basic HTTP auth)
 - `GET /health`
+
+#### Usage
+
+Set the following ENV vars:
+
+```env
+AGGREGATE_RESULTS
+BASIC_AUTH_USERNAME
+BASIC_AUTH_PASSWORD
+```
+
+Start the server with:
+
+```bash
+bundle exec rake
+```

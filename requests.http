@@ -1,6 +1,9 @@
 
 @localhost = http://127.0.0.1:9292
 
+@username = {{$dotenv BASIC_AUTH_USERNAME}}
+@password = {{$dotenv BASIC_AUTH_PASSWORD}}
+
 ###
 
 GET {{localhost}}/health
@@ -8,6 +11,7 @@ GET {{localhost}}/health
 ###
 
 POST {{localhost}}/aggregate
+Authorization: Basic {{username}} {{password}}
 
 ###
 
