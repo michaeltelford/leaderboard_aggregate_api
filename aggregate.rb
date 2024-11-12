@@ -6,6 +6,8 @@
 
 require "net/http"
 require "json"
+require "bigdecimal"
+require "bigdecimal/util"
 
 OUTPUT_FILE_PATH = "./public/aggregated_results.json".freeze
 
@@ -53,10 +55,12 @@ def map_and_sort_results(surfr_results, woo_results)
   jumps = []
 
   surfr_results.each do |result|
+    height = result[:value].to_d.truncate(1).to_f
+
     jumps << {
       source: "Surfr",
       name: result[:user][:name],
-      height: result[:value],
+      height:,
       country: result[:user][:countryIOC],
     }
   end
@@ -86,8 +90,12 @@ def write_jumps_to_file(jumps)
   puts "Results written to file: #{OUTPUT_FILE_PATH}"
 end
 
-def jumps_to_s(jumps)
-  jumps.map { |j| "#{j[:source]} - #{j[:name]} --> #{j[:height]}\n" }
+def jumps_to_s(jumps, html: false)
+  line_break = html ? "<br>" : "\n"
+
+  jumps.each_with_index.map do |j, i|
+    "#{i+1}. #{j[:source]} - #{j[:name]} --> #{j[:height]}#{line_break}"
+  end
 end
 
 def aggregate_results

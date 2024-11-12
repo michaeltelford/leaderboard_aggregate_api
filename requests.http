@@ -16,4 +16,5 @@ GET {{localhost}}/aggregated_results.json
 ###
 
 GET {{localhost}}/
+Accept: text/plain
 
