@@ -7,7 +7,7 @@
 require "net/http"
 require "json"
 
-OUTPUT_FILE_PATH = "./aggregated_results.json".freeze
+OUTPUT_FILE_PATH = "./public/aggregated_results.json".freeze
 
 def sources
   [
@@ -86,7 +86,7 @@ def write_jumps_to_file(jumps)
   puts "Results written to file: #{OUTPUT_FILE_PATH}"
 end
 
-def main
+def aggregate_results
   puts "Running aggregate script on #{Time.now.utc}"
 
   surfr_results, woo_results = pull_sources
@@ -98,4 +98,6 @@ def main
   puts "\nFinished aggregate script"
 end
 
-main
+if __FILE__ == $0
+  aggregate_results
+end

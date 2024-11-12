@@ -107,5 +107,5 @@ end
 
 - `GET /` (index page displays results)
 - `GET /aggregated.json`
-- `GET /aggregate` (requiring basic HTTP auth)
+- `POST /aggregate` (requiring basic HTTP auth)
 - `GET /health`

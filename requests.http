@@ -1,0 +1,19 @@
+
+@localhost = http://127.0.0.1:9292
+
+###
+
+GET {{localhost}}/health
+
+###
+
+POST {{localhost}}/aggregate
+
+###
+
+GET {{localhost}}/aggregated_results.json
+
+###
+
+GET {{localhost}}/
+
