@@ -32,7 +32,7 @@ def make_http_request(source_name, url)
   puts "HTTP status: #{resp.code} (#{source_name})"
   raise "Non successful HTTP response (#{source}): #{resp.body}" unless success
 
-  JSON.parse(resp.body)
+  JSON.parse(resp.body, symbolize_names: true)
 rescue RuntimeError => e
   # Returns nil if an error is raised
   puts "Failed making HTTP request (#{source_name}): #{e}"
@@ -55,21 +55,21 @@ def map_and_sort_results(surfr_results, woo_results)
   surfr_results.each do |result|
     jumps << {
       source: "Surfr",
-      name: result["user"]["name"],
-      height: result["value"],
-      country: result["user"]["countryIOC"],
+      name: result[:user][:name],
+      height: result[:value],
+      country: result[:user][:countryIOC],
     }
   end
 
   woo_results.each do |result|
-    image_url = result["_pictures"].
-      select { |pic| pic["type"] == "user" }.
-      first&.[]("url")
+    image_url = result[:_pictures].
+      select { |pic| pic[:type] == "user" }.
+      first&.[](:url)
 
     jumps << {
       source: "Woo",
-      name: "#{result["name"]} #{result["lastname"]}",
-      height: result["score"],
+      name: "#{result[:name]} #{result[:lastname]}",
+      height: result[:score],
       image_url:,
     }
   end
@@ -86,15 +86,19 @@ def write_jumps_to_file(jumps)
   puts "Results written to file: #{OUTPUT_FILE_PATH}"
 end
 
+def jumps_to_s(jumps)
+  jumps.map { |j| "#{j[:source]} - #{j[:name]} --> #{j[:height]}\n" }
+end
+
 def aggregate_results
   puts "Running aggregate script on #{Time.now.utc}"
 
   surfr_results, woo_results = pull_sources
-  jumps = map_and_sort_results(surfr_results, woo_results["items"])
+  jumps = map_and_sort_results(surfr_results, woo_results[:items])
   write_jumps_to_file(jumps)
 
   puts "\nTop 10 highest jumps:"
-  jumps.first(10).each { |j| puts "#{j[:source]} - #{j[:name]} --> #{j[:height]}" }
+  jumps_to_s(jumps).first(10).each { |str| puts str }
   puts "\nFinished aggregate script"
 end
 
