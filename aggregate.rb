@@ -85,7 +85,7 @@ def map_and_sort_results(surfr_results, woo_results)
 end
 
 def write_jumps_to_file(jumps)
-  File.open(OUTPUT_FILE_PATH, "w") { |f| f.write(JSON.pretty_generate(jumps)) }
+  File.open(OUTPUT_FILE_PATH, "w") { |f| f.write(jumps.to_json) }
 
   puts "Results written to file: #{OUTPUT_FILE_PATH}"
 end
