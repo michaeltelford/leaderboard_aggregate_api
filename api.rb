@@ -10,7 +10,6 @@ get '/health' do
 end
 
 post '/aggregate' do
-  # TODO: Require basic auth here or return 401
   aggregate_results
 
   201
