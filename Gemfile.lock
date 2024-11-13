@@ -36,6 +36,7 @@ DEPENDENCIES
   bigdecimal (~> 3.1)
   byebug (~> 11.1)
   puma (~> 6.4)
+  rack-protection (~> 4.0)
   rackup (~> 2.2)
   rake (~> 13.2)
   sinatra (~> 4.0)

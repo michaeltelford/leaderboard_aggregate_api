@@ -1,4 +1,5 @@
-require './api'
+require 'rack/protection'
+require_relative './api'
 
 # Add any required ENV vars to this array
 def env_vars_present?
@@ -25,6 +26,8 @@ raise "Missing ENV vars" unless env_vars_present?
 enable :logging
 enable :static
 
+use Rack::Protection
+
 run Sinatra::Application
 
 # Start a thread to periodically update the aggregated_results.json file
@@ -38,6 +41,6 @@ Thread.new do
       next
     end
 
-    aggregate_results() # -> aggregated_results.json
+    aggregate_results # -> aggregated_results.json
   }
 end
