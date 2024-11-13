@@ -1,7 +1,9 @@
 require "sinatra"
-require "byebug"
 require "base64"
 require_relative "aggregate"
+
+# NOTE: Comment out require "byebug" or docker build will fail
+# require "byebug"
 
 CONTENT_TYPE_JSON = { "Content-Type" => "application/json" }.freeze
 CONTENT_TYPE_HTML = { "Content-Type" => "text/html; charset=utf-8" }.freeze

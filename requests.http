@@ -1,24 +1,24 @@
 
-@localhost = http://127.0.0.1:9292
+@api = http://127.0.0.1:9292
 
 @username = {{$dotenv BASIC_AUTH_USERNAME}}
 @password = {{$dotenv BASIC_AUTH_PASSWORD}}
 
 ###
 
-GET {{localhost}}/health
+GET {{api}}/health
 
 ###
 
-POST {{localhost}}/aggregate
+POST {{api}}/aggregate
 Authorization: Basic {{username}} {{password}}
 
 ###
 
-GET {{localhost}}/aggregated_results.json
+GET {{api}}/aggregated_results.json
 
 ###
 
-GET {{localhost}}/
+GET {{api}}/
 Accept: text/plain
 

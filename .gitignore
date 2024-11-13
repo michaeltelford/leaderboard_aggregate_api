@@ -1,5 +1,7 @@
-aggregated_results.json
+public/aggregated_results.json
 
+vendor
+.bundle
 .byebug_history
 .DS_Store
 .env

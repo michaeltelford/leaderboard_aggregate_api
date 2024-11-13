@@ -1,0 +1,10 @@
+.git
+.bundle
+.byebug_history
+.DS_Store
+.env
+.gitignore
+Dockerfile
+Rakefile
+README.md
+requests.http

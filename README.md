@@ -123,5 +123,5 @@ BASIC_AUTH_PASSWORD
 Start the server with:
 
 ```bash
-bundle exec rake
+bundle exec rake serve
 ```
