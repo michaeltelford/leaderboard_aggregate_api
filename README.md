@@ -31,12 +31,13 @@ https://prod3.apiwoo.com/leaderboardsHashtags?offset=0&page_size=50&feature=heig
 
 ## Design
 
-Designed as a React app with some vanilla JS to aggregate the results.
+Ruby and Sinatra API that aggregates results from the different leaderboards (sources) and outputs a JSON file for consumption. This API will provide a HTML view of the results but other clients can consume the aggregated results from this API also.
 
 ```text
 ruby -> aggregate.rb -------> aggregated_results.json
                                            ^
 user (browser) -----> sinatra_app ---------|
+user (browser) -----> react_app   ---------|
 ```
 
 ## Development
@@ -91,13 +92,13 @@ To update the `aggregated_results.json` file every 24 hours we can use a server 
 
 ```ruby
 Thread.new do
-  loop {
-    sleep 1.day
+  loop do
+    sleep 24.hours
 
     if ENV["AGGREGATE_RESULTS"]
       aggregate_results() # -> aggregated_results.json
     end
-  }
+  end
 end
 
 # Start server...
@@ -107,15 +108,18 @@ end
 
 - `GET /` (index page displays results)
 - `GET /aggregated.json`
-- `POST /aggregate` (requiring basic HTTP auth)
+- `POST /aggregate` (requiring HTTP basic auth -> `aggregated_results.json`)
 - `GET /health`
 
 #### Usage
 
-Set the following ENV vars:
+Set the following ENV vars in an `.env` file:
 
 ```env
+RACK_ENV
+PORT
 AGGREGATE_RESULTS
+AGGREGATE_RESULTS_HOURS_DELAY
 BASIC_AUTH_USERNAME
 BASIC_AUTH_PASSWORD
 ```

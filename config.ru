@@ -37,7 +37,7 @@ run Sinatra::Application
 
 # Start a thread to periodically update the aggregated_results.json file
 Thread.new do
-  loop {
+  loop do
     puts "Next aggregate update check at: #{next_check_time}"
     sleep(aggregate_thread_delay)
 
@@ -47,5 +47,5 @@ Thread.new do
     end
 
     aggregate_results # -> aggregated_results.json
-  }
+  end
 end
