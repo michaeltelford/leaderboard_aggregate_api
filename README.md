@@ -1,7 +1,7 @@
 
 # Leaderboard Aggregate App (LAA)
 
-The Leaderboard Aggregate App (LAA) enabled users to see the combined height records of kitesurfing big air jumps from a variety of leaderboards e.g. Surfr, Woo etc.
+The Leaderboard Aggregate App (LAA) enabled users to see the combined height records of kiteboarding big air jumps from a variety of leaderboards e.g. Surfr, Woo etc.
 
 ## Sources
 
