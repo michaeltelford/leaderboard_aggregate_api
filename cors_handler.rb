@@ -16,8 +16,8 @@ class CORSHandler
 
     # For pre-flight only requests
     if env["REQUEST_METHOD"] == "OPTIONS"
-      cors_headers["access-control-allow-methods"] = "POST,PUT,PATCH,DELETE"
-      cors_headers["access-control-allow-headers"] = "Content-Type,Authorization"
+      cors_headers["access-control-allow-methods"] = "GET"
+      cors_headers["access-control-allow-headers"] = "Content-Type"
       cors_headers["access-control-max-age"] = "86400" # 24 hours
 
       return [200, cors_headers, [""]]
