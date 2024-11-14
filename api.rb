@@ -19,6 +19,12 @@ post "/aggregate" do
   201
 end
 
+get "/aggregated_results.json" do
+  json_str = File.read(OUTPUT_FILE_PATH)
+
+  [200, CONTENT_TYPE_JSON, json_str]
+end
+
 get "/" do
   html = request.accept?("text/html")
   jumps = build_jumps_response(html:)
