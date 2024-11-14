@@ -81,7 +81,13 @@ def map_and_sort_results(surfr_results, woo_results)
   puts "Successfully mapped and sorted #{jumps.size} jump result(s)"
 
   # Sorted desc i.e. highest jump first aka jumps[0]
-  jumps.sort_by { |jump| -jump[:height] }
+  jumps = jumps.sort_by { |jump| -jump[:height] }
+
+  # Add the :position field to each sorted jump
+  jumps.each_with_index.map do |jump, i|
+    jump[:position] = i + 1
+    jump
+  end
 end
 
 def write_jumps_to_file(jumps)
@@ -93,8 +99,8 @@ end
 def jumps_to_s(jumps, html: false)
   line_break = html ? "<br>" : "\n"
 
-  jumps.each_with_index.map do |j, i|
-    "#{i+1}. #{j[:source]} - #{j[:name]} --> #{j[:height]}#{line_break}"
+  jumps.map do |j|
+    "#{j[:position]}. #{j[:source]} - #{j[:name]} --> #{j[:height]}#{line_break}"
   end
 end
 
