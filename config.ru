@@ -32,7 +32,7 @@ raise "Missing ENV vars" unless env_vars_present?
 
 enable :logging
 
-# use Rack::Protection
+use Rack::Protection, except: [:remote_token]
 use CORSHandler, origin: ENV["CLIENT_ORIGIN"]
 
 run Sinatra::Application

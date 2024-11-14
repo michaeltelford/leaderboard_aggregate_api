@@ -111,13 +111,14 @@ end
 - `POST /aggregate` (requiring HTTP basic auth -> `aggregated_results.json`)
 - `GET /health`
 
-#### Usage
+## Usage
 
 Set the following ENV vars in an `.env` file:
 
 ```env
 RACK_ENV
 PORT
+CLIENT_ORIGIN
 AGGREGATE_RESULTS
 AGGREGATE_RESULTS_HOURS_DELAY
 BASIC_AUTH_USERNAME
@@ -127,5 +128,8 @@ BASIC_AUTH_PASSWORD
 Start the server with:
 
 ```bash
+bundle install
 bundle exec rake serve
 ```
+
+You can send requests to the API by using VSCode and the `requests.http` file.
