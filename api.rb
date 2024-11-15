@@ -28,10 +28,9 @@ end
 
 get "/" do
   last_modified File.mtime(OUTPUT_FILE_PATH)
-  html = request.accept?("text/html")
-  jumps = build_jumps_response(html:)
+  @jumps = read_results_from_file
 
-  [200, CONTENT_TYPE_HTML, jumps]
+  erb :index
 end
 
 ### Private helper methods ###
@@ -50,10 +49,7 @@ def authorized?(headers)
   username == ENV["BASIC_AUTH_USERNAME"] && password == ENV["BASIC_AUTH_PASSWORD"]
 end
 
-# Returns an object that responds to #each and yields only strings to the given block
-def build_jumps_response(html: true)
+def read_results_from_file
   json_str = File.read(OUTPUT_FILE_PATH)
-  jumps = JSON.parse(json_str, symbolize_names: true)
-
-  jumps_to_s(jumps, html:)
+  JSON.parse(json_str, symbolize_names: true)
 end
