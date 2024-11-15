@@ -1,12 +1,15 @@
 require "sinatra"
 require "base64"
+
+require "sinatra/reloader" if development?
+require "byebug" if development?
+
 require_relative "aggregate"
 
-# NOTE: Comment out require "byebug" or docker build will fail
-# require "byebug"
 
 CONTENT_TYPE_JSON = { "Content-Type" => "application/json" }.freeze
 CONTENT_TYPE_HTML = { "Content-Type" => "text/html; charset=utf-8" }.freeze
+
 
 get "/health" do
   200
@@ -28,7 +31,7 @@ end
 
 get "/" do
   last_modified File.mtime(OUTPUT_FILE_PATH)
-  @jumps = read_results_from_file
+  @jumps = read_jumps_from_file
 
   erb :index
 end
@@ -47,9 +50,4 @@ def authorized?(headers)
 
   username, password = secret.split(":")
   username == ENV["BASIC_AUTH_USERNAME"] && password == ENV["BASIC_AUTH_PASSWORD"]
-end
-
-def read_results_from_file
-  json_str = File.read(OUTPUT_FILE_PATH)
-  JSON.parse(json_str, symbolize_names: true)
 end

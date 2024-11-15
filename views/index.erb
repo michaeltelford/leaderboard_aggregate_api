@@ -1,2 +1,20 @@
-<p>HELLO FROM ERB</p>
-<p><%= @jumps.size %></p>
+<table id='results' class='centre-table border-separate border-spacing-2 border border-slate-400'>
+    <thead>
+        <tr>
+            <th>Position</th>
+            <th>Source</th>
+            <th>Rider</th>
+            <th>Height</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @jumps.each do |jump| %>
+            <tr>
+                <td><%= jump[:position] %></td>
+                <td><%= jump[:source] %></td>
+                <td><%= jump[:name] %></td>
+                <td><%= jump[:height] %></td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>

@@ -20,7 +20,6 @@ GET {{api}}/aggregated_results.json
 ###
 
 GET {{api}}/
-Accept: text/plain
 
 ###
 

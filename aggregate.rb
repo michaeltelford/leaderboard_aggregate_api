@@ -1,7 +1,7 @@
 #!/bin/ruby
 #
 # Script to retrieve and aggregate the results/jumps from all leaderboards.
-# The output is a common jump format stored in a file called `aggregated.json`.
+# The output is a common jump format stored in a JSON file.
 #
 
 require "net/http"
@@ -9,7 +9,7 @@ require "json"
 require "bigdecimal"
 require "bigdecimal/util"
 
-OUTPUT_FILE_PATH = "./public/aggregated_results.json".freeze
+OUTPUT_FILE_PATH = "./aggregated_results.json".freeze
 
 def sources
   [
@@ -90,10 +90,15 @@ def map_and_sort_results(surfr_results, woo_results)
   end
 end
 
+def read_jumps_from_file
+  json_str = File.read(OUTPUT_FILE_PATH)
+  JSON.parse(json_str, symbolize_names: true)
+end
+
 def write_jumps_to_file(jumps)
   File.open(OUTPUT_FILE_PATH, "w") { |f| f.write(jumps.to_json) }
 
-  puts "Results written to file: #{OUTPUT_FILE_PATH}"
+  puts "Results written to file on #{Time.now.utc}: #{OUTPUT_FILE_PATH}"
 end
 
 def jumps_to_s(jumps, html: false)

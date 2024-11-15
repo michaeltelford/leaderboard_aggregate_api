@@ -2,7 +2,7 @@
 ENV["APP_ENV"] = ENV["RACK_ENV"]
 
 require 'rack/protection'
-require_relative './cors_handler'
+require_relative './middlewares/cors_handler'
 require_relative './api'
 
 # Add any required ENV vars to this array

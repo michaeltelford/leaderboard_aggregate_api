@@ -11,6 +11,7 @@ gem "bigdecimal", "~> 3.1"
 gem "rake", "~> 13.2"
 
 group :development do
+  gem "sinatra-contrib", "~> 4.0"
   gem "byebug", "~> 11.1"
   gem "dotenv", "~> 3.1"
 end
