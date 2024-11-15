@@ -15,13 +15,5 @@ Authorization: Basic {{username}} {{password}}
 
 ###
 
-GET {{api}}/aggregated_results.json
-
-###
-
 GET {{api}}/
-
-###
-
-OPTIONS {{api}}/
 

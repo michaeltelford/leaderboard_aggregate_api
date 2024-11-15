@@ -2,7 +2,6 @@
 ENV["APP_ENV"] = ENV["RACK_ENV"]
 
 require 'rack/protection'
-require_relative './middlewares/cors_handler'
 require_relative './api'
 
 # Add any required ENV vars to this array
@@ -10,7 +9,6 @@ def env_vars_present?
   [
     "RACK_ENV",
     "PORT",
-    "CLIENT_ORIGIN",
     "AGGREGATE_RESULTS",
     "AGGREGATE_RESULTS_HOURS_DELAY",
     "BASIC_AUTH_USERNAME",
@@ -33,7 +31,6 @@ raise "Missing ENV vars" unless env_vars_present?
 enable :logging
 
 use Rack::Protection, except: [:remote_token]
-use CORSHandler, origin: ENV["CLIENT_ORIGIN"]
 
 run Sinatra::Application
 

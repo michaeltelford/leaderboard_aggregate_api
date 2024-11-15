@@ -7,10 +7,6 @@ require "byebug" if development?
 require_relative "aggregate"
 
 
-CONTENT_TYPE_JSON = { "Content-Type" => "application/json" }.freeze
-CONTENT_TYPE_HTML = { "Content-Type" => "text/html; charset=utf-8" }.freeze
-
-
 get "/health" do
   200
 end
@@ -20,13 +16,6 @@ post "/aggregate" do
 
   aggregate_results
   201
-end
-
-get "/aggregated_results.json" do
-  last_modified File.mtime(OUTPUT_FILE_PATH)
-  json_str = File.read(OUTPUT_FILE_PATH)
-
-  [200, CONTENT_TYPE_JSON, json_str]
 end
 
 get "/" do
