@@ -20,7 +20,11 @@ end
 
 get "/" do
   last_modified File.mtime(OUTPUT_FILE_PATH)
-  @jumps = read_jumps_from_file
+
+  @jumps              = read_jumps_from_file
+  top_surfr_index     = first_source_index(@jumps, "surfr")
+  top_woo_index       = first_source_index(@jumps, "woo")
+  @top_result_indexes = [top_surfr_index, top_woo_index]
 
   erb :index
 end
@@ -39,4 +43,9 @@ def authorized?(headers)
 
   username, password = secret.split(":")
   username == ENV["BASIC_AUTH_USERNAME"] && password == ENV["BASIC_AUTH_PASSWORD"]
+end
+
+# Return the array index of the first result with matching source.
+def first_source_index(jumps, source)
+  jumps.index { |jump| jump[:source].to_s.downcase == source.to_s.downcase }
 end

@@ -1,4 +1,4 @@
-<p>Below are the highest jumps as recorded by <a href="https://surfr-leaderboard.vercel.app/">Surfr</a> and <a href="https://leaderboards.woosports.com/?feature=height&game_type=big_air">Woo</a>. Results can take up to 24 hours to be displayed here.</p>
+<p>Below are the highest jumps as recorded by <a href="https://surfr-leaderboard.vercel.app/">Surfr</a> and <a href="https://leaderboards.woosports.com/?feature=height&game_type=big_air">Woo</a>. New results can take up to 24 hours to sync and be displayed here. The highest scoring jump from each source is highlighted in green.</p>
 <table id='results' class='centre-table'>
     <thead>
         <tr>
@@ -9,8 +9,8 @@
         </tr>
     </thead>
     <tbody>
-        <% @jumps.each do |jump| %>
-            <tr>
+        <% @jumps.each_with_index do |jump, i| %>
+            <tr class="<%= @top_result_indexes.include?(i) ? "background-lime" : "" %>">
                 <td><%= jump[:position] %></td>
                 <td><%= jump[:source] %></td>
                 <td><%= jump[:name] %></td>

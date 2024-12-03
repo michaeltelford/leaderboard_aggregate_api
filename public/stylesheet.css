@@ -6,3 +6,7 @@
 .centre-text {
   text-align: center;
 }
+
+.background-lime {
+  background: lime !important;
+}
