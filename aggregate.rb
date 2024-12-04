@@ -8,6 +8,7 @@ require "net/http"
 require "json"
 require "bigdecimal"
 require "bigdecimal/util"
+require "base64"
 
 OUTPUT_FILE_PATH = "./aggregated_results.json".freeze
 
@@ -109,12 +110,23 @@ def jumps_to_s(jumps, html: false)
   end
 end
 
+def results_changed?(jumps)
+  new_results = Base64.encode64(jumps.to_json)
+  current_results = Base64.encode64(read_jumps_from_file().to_json)
+
+  changed = new_results != current_results
+  result = changed ? "have" : "haven't"
+  puts "Results #{result} changed"
+
+  changed
+end
+
 def aggregate_results
   puts "Running aggregate script on #{Time.now.utc}"
 
   surfr_results, woo_results = pull_sources
   jumps = map_and_sort_results(surfr_results, woo_results[:items])
-  write_jumps_to_file(jumps)
+  write_jumps_to_file(jumps) if results_changed?(jumps)
 
   puts "\nTop 10 highest jumps:"
   jumps_to_s(jumps).first(10).each { |str| puts str }
