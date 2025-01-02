@@ -19,9 +19,11 @@ post "/aggregate" do
 end
 
 get "/" do
-  last_modified File.mtime(OUTPUT_FILE_PATH)
+  last_modified results_last_modified
 
-  @jumps              = read_jumps_from_file
+  @delay = ENV["AGGREGATE_RESULTS_HOURS_DELAY"].to_i
+  @jumps = read_jumps_from_file
+
   top_surfr_index     = first_source_index(@jumps, "surfr")
   top_woo_index       = first_source_index(@jumps, "woo")
   @top_result_indexes = [top_surfr_index, top_woo_index]

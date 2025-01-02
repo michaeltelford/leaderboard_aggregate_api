@@ -10,7 +10,18 @@ require "bigdecimal"
 require "bigdecimal/util"
 require "base64"
 
-OUTPUT_FILE_PATH = "./aggregated_results.json".freeze
+
+RESULTS_FILEPATH = "./aggregated_results.json".freeze
+
+
+def results_filepath
+  RESULTS_FILEPATH
+end
+
+def results_last_modified
+  File.mtime(results_filepath)
+end
+
 
 def sources
   [
@@ -22,8 +33,9 @@ def sources
       name: "Woo",
       url: "https://prod3.apiwoo.com/leaderboardsHashtags?offset=0&page_size=50&feature=height&game_type=big_air",
     }
-  ]
+  ].freeze
 end
+
 
 def make_http_request(source_name, url)
   puts "Requesting results from #{source_name}..."
@@ -92,14 +104,14 @@ def map_and_sort_results(surfr_results, woo_results)
 end
 
 def read_jumps_from_file
-  json_str = File.read(OUTPUT_FILE_PATH)
+  json_str = File.read(results_filepath)
   JSON.parse(json_str, symbolize_names: true)
 end
 
 def write_jumps_to_file(jumps)
-  File.open(OUTPUT_FILE_PATH, "w") { |f| f.write(jumps.to_json) }
+  File.open(results_filepath, "w") { |f| f.write(jumps.to_json) }
 
-  puts "Results written to file on #{Time.now.utc}: #{OUTPUT_FILE_PATH}"
+  puts "Results written to file on #{results_last_modified}: #{results_filepath}"
 end
 
 def jumps_to_s(jumps, html: false)
@@ -111,6 +123,8 @@ def jumps_to_s(jumps, html: false)
 end
 
 def results_changed?(jumps)
+  return true unless File.exist?(results_filepath)
+
   new_results = Base64.encode64(jumps.to_json)
   current_results = Base64.encode64(read_jumps_from_file().to_json)
 
