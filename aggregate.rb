@@ -128,7 +128,7 @@ def aggregate_results
   jumps = map_and_sort_results(surfr_results, woo_results[:items])
   write_jumps_to_file(jumps) if results_changed?(jumps)
 
-  puts "\nTop 10 highest jumps:"
+  puts "\nTop 10 combined highest jumps:"
   jumps_to_s(jumps).first(10).each { |str| puts str }
   puts "\nFinished aggregate script"
 end

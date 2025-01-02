@@ -1,24 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-    <meta charset="utf-8">
-    <title>Big Air Combined Leaderboard</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Kiteboarding Big Air Combined Leaderboard">
-    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
-    <link rel="stylesheet" href="stylesheet.css">
+        <meta charset="utf-8">
+        <title>Big Air Combined Leaderboard</title>
+        <meta name="description" content="Kiteboarding Big Air Combined Leaderboard">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="stylesheet" href="stylesheet.css">
     </head>
+
     <body>
-        <header id='header'>
-        <h1 id='title' class="centre-text">
-          Kiteboarding Big Air Combined Leaderboard
-        </h1>
-        </header>
-        <main>
-            <%= yield %>
-        </main>
-        <footer id='footer' class="centre-text">
-            Developed by <a href="mailto:micky_t@ymail.com">Michael Telford</a>
-        </footer>
+        <div class="body-container">
+            <header id='header'>
+                <h1 id='title' class="text-center text-3xl py-8 bg-sky-500 text-white">
+                    Kiteboarding Big Air Combined Leaderboard
+                </h1>
+            </header>
+
+            <main>
+                <%= yield %>
+            </main>
+
+            <footer id='footer' class="text-center mt-8 py-8 bg-sky-500 text-white">
+                Developed by <a href="mailto:micky_t@ymail.com" class="underline">Michael Telford</a>
+            </footer>
+        </div>
     </body>
 </html>

@@ -1,21 +1,24 @@
-<p>Below are the highest jumps as recorded by <a href="https://surfr-leaderboard.vercel.app/">Surfr</a> and <a href="https://leaderboards.woosports.com/?feature=height&game_type=big_air">Woo</a>. New results can take up to 24 hours to sync and be displayed here. The highest scoring jump from each source is highlighted in green.</p>
-<table id='results' class='centre-table'>
-    <thead>
-        <tr>
-            <th>Position</th>
-            <th>Source</th>
-            <th>Rider</th>
-            <th>Height (m)</th>
-        </tr>
-    </thead>
-    <tbody>
-        <% @jumps.each_with_index do |jump, i| %>
-            <tr class="<%= @top_result_indexes.include?(i) ? "background-lime" : "" %>">
-                <td><%= jump[:position] %></td>
-                <td><%= jump[:source] %></td>
-                <td><%= jump[:name] %></td>
-                <td><%= jump[:height] %></td>
+<p class="my-6 px-5">Below are the highest jumps as recorded by <a href="https://surfr-leaderboard.vercel.app/" class="underline">Surfr</a> and <a href="https://leaderboards.woosports.com/?feature=height&game_type=big_air" class="underline">Woo</a>. New results can take <span class="italic">up to</span> <%= @delay %> hour(s) to sync and be displayed here. The highest scoring jump from each source is highlighted in green.</p>
+
+<div class="table-container">
+    <table id='results' class='centre-table'>
+        <thead>
+            <tr>
+                <th>Position</th>
+                <th>Source</th>
+                <th>Rider</th>
+                <th>Height (m)</th>
             </tr>
-        <% end %>
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            <% @jumps.each_with_index do |jump, i| %>
+                <tr class="<%= @top_result_indexes.include?(i) ? "background-lime" : "" %>">
+                    <td><%= jump[:position] %></td>
+                    <td><%= jump[:source] %></td>
+                    <td><%= jump[:name] %></td>
+                    <td><%= jump[:height] %></td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+</div>
