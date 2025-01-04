@@ -15,10 +15,10 @@
         <tbody>
             <% @jumps.each_with_index do |jump, i| %>
                 <tr class="<%= @top_result_indexes.include?(i) ? "background-lime" : "" %>">
-                    <td class="border-2 py-2 sm:px-2"><%= jump[:position] %></td>
-                    <td class="border-2 py-2 sm:px-2"><%= jump[:source] %></td>
-                    <td class="border-2 py-2 sm:px-2"><%= jump[:name] %></td>
-                    <td class="border-2 py-2 sm:px-2 text-right"><%= jump[:height] %></td>
+                    <td class="border-2 py-2 text-center sm:px-2"><%= jump[:position] %></td>
+                    <td class="border-2 py-2 text-center sm:px-2"><%= jump[:source] %></td>
+                    <td class="border-2 py-2 text-center sm:px-2"><%= jump[:name] %></td>
+                    <td class="border-2 py-2 text-center sm:px-2"><%= jump[:height] %></td>
                 </tr>
             <% end %>
         </tbody>
