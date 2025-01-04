@@ -4,19 +4,19 @@
     <table id='results' class='centre-table'>
         <thead>
             <tr>
-                <th>Position</th>
-                <th>Source</th>
-                <th>Rider</th>
-                <th>Height (m)</th>
+                <th class="border-2">Position</th>
+                <th class="border-2">Source</th>
+                <th class="border-2">Rider</th>
+                <th class="border-2">Height (m)</th>
             </tr>
         </thead>
         <tbody>
             <% @jumps.each_with_index do |jump, i| %>
                 <tr class="<%= @top_result_indexes.include?(i) ? "background-lime" : "" %>">
-                    <td><%= jump[:position] %></td>
-                    <td><%= jump[:source] %></td>
-                    <td><%= jump[:name] %></td>
-                    <td><%= jump[:height] %></td>
+                    <td class="border-2"><%= jump[:position] %></td>
+                    <td class="border-2"><%= jump[:source] %></td>
+                    <td class="border-2"><%= jump[:name] %></td>
+                    <td class="border-2"><%= jump[:height] %></td>
                 </tr>
             <% end %>
         </tbody>
