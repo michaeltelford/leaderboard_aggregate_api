@@ -11,11 +11,12 @@ require "bigdecimal/util"
 require "base64"
 
 
-RESULTS_FILEPATH = "./aggregated_results.json".freeze
+RESULTS_FILEPATH  = "./aggregated_results.json"
+DEFAULT_MAX_JUMPS = 40
 
 
 def results_filepath
-  RESULTS_FILEPATH
+  RESULTS_FILEPATH.freeze
 end
 
 def results_last_modified
@@ -35,9 +36,8 @@ def sources
   ].freeze
 end
 
-def max_jumps_per_source
-  max = ENV["MAX_JUMPS_PER_SOURCE"]
-  max = 20 unless max
+def max_jumps
+  max = ENV["MAX_JUMPS"] || DEFAULT_MAX_JUMPS
 
   max.to_i.freeze
 end
@@ -73,12 +73,9 @@ def pull_sources
 end
 
 def map_and_sort_results(surfr_results, woo_results)
-  max_jumps = max_jumps_per_source
   jumps = []
 
   surfr_results.each_with_index do |result, i|
-    break if i == max_jumps
-
     jumps << {
       source: "Surfr",
       name: result[:user][:name],
@@ -88,11 +85,9 @@ def map_and_sort_results(surfr_results, woo_results)
   end
 
   woo_results.each_with_index do |result, i|
-    break if i == max_jumps
-
     image_url = result[:_pictures].
-      select { |pic| pic[:type] == "user" }.
-      first&.[](:url)
+                  select { |pic| pic[:type] == "user" }.
+                  first&.[](:url)
 
     jumps << {
       source: "Woo",
@@ -102,10 +97,12 @@ def map_and_sort_results(surfr_results, woo_results)
     }
   end
 
-  puts "Successfully mapped and sorted #{jumps.size} total jump result(s)"
+  puts "Successfully mapped and sorted #{jumps.size} jump(s), selecting the top #{max_jumps}"
 
-  # Sorted desc i.e. highest jump first aka jumps[0]
-  jumps = jumps.sort_by { |jump| -jump[:height] }
+  # Sorted desc i.e. highest jump first and cap it to max_jumps
+  jumps = jumps.
+            sort_by { |jump| -jump[:height] }.
+            first(max_jumps)
 
   # Add the :position field to each sorted jump
   jumps.each_with_index.map do |jump, i|
@@ -127,7 +124,7 @@ end
 def write_jumps_to_file(jumps)
   File.open(results_filepath, "w") { |f| f.write(jumps.to_json) }
 
-  puts "Results written to file on #{results_last_modified}: #{results_filepath}"
+  puts "Results written to file at #{results_last_modified.utc}: #{results_filepath}"
 end
 
 def jumps_to_s(jumps, html: false)
@@ -152,7 +149,7 @@ def results_changed?(jumps)
 end
 
 def aggregate_results
-  puts "Running aggregate script at #{Time.now.utc}"
+  puts "Starting aggregate script at #{Time.now.utc}"
 
   surfr_results, woo_results = pull_sources
   jumps = map_and_sort_results(surfr_results, woo_results[:items])
@@ -160,7 +157,7 @@ def aggregate_results
 
   puts "\nTop 5 combined highest jumps:"
   jumps_to_s(jumps).first(5).each { |str| puts str }
-  puts "\nFinished aggregate script"
+  puts "\nFinished aggregate script at #{Time.now.utc}"
 end
 
 if __FILE__ == $0
