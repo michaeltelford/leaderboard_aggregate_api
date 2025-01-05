@@ -5,7 +5,7 @@
 <div class="table-container">
     <table id='results' class='centre-table'>
         <thead>
-            <tr>
+            <tr class="bg-gray-200">
                 <th class="border-2 py-2 sm:px-2">Position</th>
                 <th class="border-2 py-2 sm:px-2">Source</th>
                 <th class="border-2 py-2 sm:px-2">Rider</th>
@@ -13,8 +13,12 @@
             </tr>
         </thead>
         <tbody>
-            <% @jumps.each_with_index do |jump, i| %>
-                <tr class="<%= @top_result_indexes.include?(i) ? "background-lime" : "" %>">
+            <% @jumps.each_with_index do |jump, i|
+                classes = ""
+                classes << "bg-gray-100" if (i % 2) == 0
+                classes << " background-lime" if @top_result_indexes.include?(i)
+            %>
+                <tr class="<%= classes.strip %>">
                     <td class="border-2 py-2 text-center sm:px-2"><%= jump[:position] %></td>
                     <td class="border-2 py-2 text-center sm:px-2"><%= jump[:source] %></td>
                     <td class="border-2 py-2 text-center sm:px-2"><%= jump[:name] %></td>
