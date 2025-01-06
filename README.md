@@ -3,6 +3,8 @@
 
 The Leaderboard Aggregate App (LAA) enabled users to see the combined height records of kiteboarding big air jumps from a variety of leaderboards e.g. Surfr, Woo etc.
 
+This repo contains a Sinatra app providing both a UI and API monolith. In addition to the webapp, this repo also spawns a worker thread which periodically aggregates the results from the source APIs; this in turn updates the webapp UI. Therefore, this repo and webapp is standalone and doesn't require any other repos to operate.
+
 ## Sources
 
 ### Surfr
