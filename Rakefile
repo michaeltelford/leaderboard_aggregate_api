@@ -1,5 +1,5 @@
 require "dotenv"
-require_relative './aggregate'
+require_relative "./aggregate"
 
 Dotenv.load
 
@@ -13,6 +13,11 @@ end
 desc "Aggregate the leaderboard results"
 task :aggregate do
   aggregate_results
+end
+
+desc "Start an infinite aggregate loop"
+task :aggregate_loop do
+  aggregate_loop
 end
 
 desc "Build a production docker image"

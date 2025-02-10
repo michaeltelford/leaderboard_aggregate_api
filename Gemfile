@@ -9,6 +9,7 @@ gem "base64", "~> 0.2.0"
 gem "rack-protection", "~> 4.0"
 gem "bigdecimal", "~> 3.1"
 gem "rake", "~> 13.2"
+gem "overmind", "~> 2.5.1"
 
 group :development do
   gem "sinatra-contrib", "~> 4.0"

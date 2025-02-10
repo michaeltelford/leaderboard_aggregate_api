@@ -113,7 +113,7 @@ end
 - `POST /aggregate` (requiring HTTP basic auth -> `aggregated_results.json`)
 - `GET /health`
 
-## Usage
+## Development Usage
 
 Set the following ENV vars in an `.env` file:
 
@@ -134,3 +134,19 @@ bundle exec rake serve
 ```
 
 You can send requests to the API by using VSCode and the `requests.http` file.
+
+## Production Usage
+
+The production version of this app should have the following pre-requisites performed:
+
+- Set `ENV=production` (in `.env`) - also check the other var values
+- Run `bundle exec rake aggregate` (to produce `aggregated_results.json`)
+
+Start the app from the root of this repo by running the `run.sh` script (which uses the `Procfile`) to start the following:
+
+- Web server (to serve incoming requests)
+- Worker (which will periodically aggregate the results)
+
+There is now a single background process running [overmind](https://github.com/DarthSim/overmind) which in turn runs the two additional processes listed above.
+
+Next you should list open ports and grab the `PID` of the process listed against the production `PORT`. To stop the app run `kill <PID>`.

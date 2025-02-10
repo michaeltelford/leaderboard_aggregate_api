@@ -42,6 +42,16 @@ def max_jumps
   max.to_i.freeze
 end
 
+# Returns the number of seconds to sleep before aggregating results
+def aggregate_thread_delay
+  hours = ENV["AGGREGATE_RESULTS_HOURS_DELAY"].to_i
+  hours * 60 * 60
+end
+
+def next_check_time
+  Time.now.utc + aggregate_thread_delay
+end
+
 
 def make_http_request(source_name, url)
   # TODO: In future, apply max_jumps_per_source to API request
@@ -158,6 +168,20 @@ def aggregate_results
   puts "\nTop 5 combined highest jumps:"
   jumps_to_s(jumps).first(5).each { |str| puts str }
   puts "\nFinished aggregate script at #{Time.now.utc}"
+end
+
+def aggregate_loop
+  loop do
+    puts "Next aggregate update check at: #{next_check_time}"
+    sleep(aggregate_thread_delay)
+
+    if ENV["AGGREGATE_RESULTS"] != "true"
+      puts 'Skipping aggregate update as ENV["AGGREGATE_RESULTS"] is not "true"'
+      next
+    end
+
+    aggregate_results # -> aggregated_results.json
+  end
 end
 
 if __FILE__ == $0
