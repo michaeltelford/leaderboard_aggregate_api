@@ -142,11 +142,18 @@ The production version of this app should have the following pre-requisites perf
 - Set `ENV=production` (in `.env`) - also check the other var values
 - Run `bundle exec rake aggregate` (to produce `aggregated_results.json`)
 
-Start the app from the root of this repo by running the `run.sh` script (which uses the `Procfile`) to start the following:
+### Starting the app
+
+Start the app from the root of this repo by running the `./run.sh` script (which uses the `Procfile`) to start the following:
 
 - Web server (to serve incoming requests)
 - Worker (which will periodically aggregate the results)
 
 There is now a single background process running [overmind](https://github.com/DarthSim/overmind) which in turn runs the two additional processes listed above.
 
-Next you should list open ports and grab the `PID` of the process listed against the production `PORT`. To stop the app run `kill <PID>`.
+### Once running...
+
+- Use `bundle exec overmind ps` for PIDs and statuses
+- Use `bundle exec overmind quit` to stop all processes
+- Use `bundle exec overmind connect` for process connection (e.g. viewing all logs); To exit the tmux session use: `Ctrl+b`, then press `d`.
+- Use `bundle exec overmind echo` to tail incoming logs (not to see existing ones)
