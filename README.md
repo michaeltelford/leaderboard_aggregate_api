@@ -141,8 +141,11 @@ The production version of this app should have the following pre-requisites perf
 
 - Set `ENV=production` (in `.env`) - also check the other var values
 - Run `bundle exec rake aggregate` (to produce `aggregated_results.json`)
+- Port 80 is not currently in use
 
 ### Starting the app
+
+**Note**: On some systems like Ubuntu, you may need to run the below script as `sudo`.
 
 Start the app from the root of this repo by running the `./run.sh` script (which uses the `Procfile`) to start the following:
 
@@ -152,6 +155,8 @@ Start the app from the root of this repo by running the `./run.sh` script (which
 There is now a single background process running [overmind](https://github.com/DarthSim/overmind) which in turn runs the two additional processes listed above.
 
 ### Once running...
+
+**Note**: On some systems like Ubuntu, you may need to run the below commands as `sudo`.
 
 - Use `bundle exec overmind ps` for PIDs and statuses
 - Use `bundle exec overmind quit` to stop all processes
