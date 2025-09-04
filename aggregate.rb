@@ -159,7 +159,7 @@ def results_changed?(jumps)
 end
 
 def aggregate_results
-  puts "Starting aggregate script at #{Time.now.utc}"
+  puts "\nStarting aggregate script at #{Time.now.utc}"
 
   surfr_results, woo_results = pull_sources
   jumps = map_and_sort_results(surfr_results, woo_results[:items])

@@ -156,9 +156,9 @@ There is now a single background process running [overmind](https://github.com/D
 
 ### Once running...
 
-**Note**: On some systems like Ubuntu, you may need to run the below commands as `sudo`.
+**Note**: On some systems like Ubuntu, you may need to run the below commands as `sudo`. To verify if root is needed, check the owner of `.overmind.sock`.
 
 - Use `bundle exec overmind ps` for PIDs and statuses
 - Use `bundle exec overmind quit` to stop all processes
-- Use `bundle exec overmind connect` for process connection (e.g. viewing all logs); To exit the tmux session use: `Ctrl+b`, then press `d`.
+- Use `bundle exec overmind connect <process>` for process connection (e.g. viewing all logs); To exit the tmux session use: `Ctrl+b`, then press `d`.
 - Use `bundle exec overmind echo` to tail incoming logs (not to see existing ones)
